@@ -1,5 +1,4 @@
 
-
 function Card({card, cardUpdate, cardDelete, filterChange}) {
   return (
     <>
@@ -30,10 +29,10 @@ function Card({card, cardUpdate, cardDelete, filterChange}) {
                 </div>
             </div>
             <div className="card-footer bg-transparent border-top-0 d-flex justify-content-end">
-                <a href="#!"  type="button" className="btn btn-primary px-4 me-3" 
-                onClick={()=> cardUpdate(card.TodoName, card.TodoDescription, card.id)}>Edit</a>
-                <a href="#!" type="button" className="btn btn-danger px-3 me-2"
-                onClick={()=> cardDelete(card.id)}>Delete</a>
+                <button className="btn btn-primary px-4 me-3" 
+                onClick={()=> cardUpdate(card.TodoName, card.TodoDescription, card.id)}>Edit</button>
+                <button className="btn btn-danger px-3 me-2"
+                onClick={()=> cardDelete(card.id)}>Delete</button>
             </div>
         </div>
     </div>

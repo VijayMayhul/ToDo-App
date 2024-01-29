@@ -1,3 +1,4 @@
+
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -12,20 +13,20 @@ function App() {
   
   const [todoName, setTodoName] = useState('');
   const [todoDescription, setTodoDescription] = useState('');
-  const [buttonAdd, setButtonAdd] = useState('Add Todo');
+  const [buttonAdd, setButtonAdd] = useState('Add ToDo');
   const [editingCardId, setEditingCardId] = useState(null);
   const [cardDetails, setCardDetails] = useState([]);
-  const [state, setState] = useState('Not Completed');
+  // const [state, setState] = useState('Not Completed');
   const [filterSelect, setFilterSelect] = useState('All');
 
   //Adding new ToDo's
   let Add_UpdateToDo = (todoN, todoD) => {
-    if (buttonAdd === 'Add Todo') {
+    if (buttonAdd === 'Add ToDo') {
       let obj = {
         TodoName: todoN,
         TodoDescription: todoD,
-        id: cardDetails.length + 1,
-        status: state
+        id: Date.now(),
+        status: 'Not Completed'
       };
       setCardDetails([...cardDetails, obj]);
     } else if (buttonAdd === 'Update ToDo') {
@@ -35,6 +36,7 @@ function App() {
       setCardDetails(updatedCardDetails);
       setButtonAdd('Add ToDo');
       setEditingCardId(null);
+      
     }
     setTodoName('');
     setTodoDescription('');
@@ -56,7 +58,7 @@ function App() {
   
   //Updating the Status of the ToDO Card
   let filterChange = (filSta, id)=>{
-    setState(filSta);
+    // setState(filSta);
     const updatedCardDetails = cardDetails.map((card) =>
         card.id === id ? {...card, status: filSta} : card
       );
@@ -88,8 +90,8 @@ function App() {
                value={todoDescription} onChange={(e)=>setTodoDescription(e.target.value)} required/>
             </div>
             <div className="col-md-12 col-lg-3 d-flex justify-content-center">
-              <button type="button" className={`btn btn-success w-75 
-              ${todoName === '' || todoDescription === '' ? 'disabled' : ''}`} onClick={()=> Add_UpdateToDo(todoName, todoDescription)}>{buttonAdd}</button>
+              <button type="button" disabled={todoName === "" || todoDescription === ""}  
+              className={`btn w-75 ${buttonAdd === 'Add ToDo' ? 'btn-success' : 'btn-primary'}`} onClick={()=> Add_UpdateToDo(todoName, todoDescription)}>{buttonAdd}</button>
             </div>
         </form>
         <div className='row mt-5 px-md-5 px-lg-5 d-flex align-items-center'>
@@ -122,8 +124,8 @@ function App() {
         <div className='row todo-cards-row py-5 d-flex justify-content-center'>
             {
               filteredCards.length === 0 ? <h3 className='h3 text-center mb-4'>The To-Do list is craving attention.<br/> Time to add some tasks and<br/> make it shine!</h3> :
-              filteredCards.map((card, index)=>{
-                return <Card key={index} card={card} cardUpdate={cardUpdate} cardDelete={cardDelete} 
+              filteredCards.map((card)=>{
+                return <Card key={card.id} card={card} cardUpdate={cardUpdate} cardDelete={cardDelete} 
                 filterChange={filterChange}/>
               })
             }
@@ -136,4 +138,3 @@ function App() {
 }
 
 export default App;
-
