@@ -8,6 +8,8 @@ import { useState } from 'react';
 import Card from './Card';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Form from './components/Form';
+import Filter from './components/Filter';
 
 function App() {
   
@@ -78,49 +80,9 @@ function App() {
     <>
     <Header/>
       <div className='container'>
-        <form className='row mt-4 g-4 d-flex justify-content-center'>
-            <div className="col-md-6 col-lg-4 d-flex justify-content-center">
-              <label htmlFor="ToDoName" className="visually-hidden">ToDo Name</label>
-              <input type="text" className="form-control w-100" id="ToDoName" placeholder='ToDo Name'
-              value={todoName} onChange={(e)=>setTodoName(e.target.value)} required/>
-            </div>
-            <div className="col-md-6 col-lg-4 d-flex justify-content-center">
-              <label htmlFor="ToDoDescription" className="visually-hidden">ToDo Description</label>
-              <input type="text" className="form-control w-100" id="ToDoDescription" placeholder="ToDo Description"
-               value={todoDescription} onChange={(e)=>setTodoDescription(e.target.value)} required/>
-            </div>
-            <div className="col-md-12 col-lg-3 d-flex justify-content-center">
-              <button type="button" disabled={todoName === "" || todoDescription === ""}  
-              className={`btn w-75 ${buttonAdd === 'Add ToDo' ? 'btn-success' : 'btn-primary'}`} onClick={()=> Add_UpdateToDo(todoName, todoDescription)}>{buttonAdd}</button>
-            </div>
-        </form>
-        <div className='row mt-5 px-md-5 px-lg-5 d-flex align-items-center'>
-          <div className='col-12 col-md-5 col-lg-4 d-flex justify-content-center'><h4 className='h4 m-0'>My Todos</h4></div>
-          <div className='col-12 col-md-1 col-lg-3 mb-3'></div>
-          <div className='col-12 col-md-6 col-lg-5 d-flex align-items-center justify-content-center'>
-            <h5 className='h5 m-0 d-inline'><label htmlFor="dropDown">Status Filter : &nbsp;</label></h5>
-            <div className="dropdown d-inline">
-              <button className={`btn btn-outline-dark text-white dropdown-toggle
-                ${filterSelect === 'All' ? 'btn-primary' : filterSelect === 'Completed' ?
-                'btn-success' : 'btn-danger'}`} type="button" id="dropDown" data-bs-toggle="dropdown" 
-                aria-expanded="false">{filterSelect}&nbsp;</button>
-              <ul className="dropdown-menu" aria-labelledby="dropDown">
-                <li>
-                  <button className="dropdown-item btn-primary" type="button" onClick={() => setFilterSelect('All')}>
-                    All</button>
-                </li>
-                <li>
-                  <button className="dropdown-item" type="button" onClick={() => setFilterSelect('Completed')}>
-                    Completed</button>
-                </li>
-                <li>
-                  <button className="dropdown-item" type="button" onClick={() => setFilterSelect('Not Completed')}>
-                    Not Completed</button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <Form todoName={todoName} setTodoName={setTodoName} todoDescription={todoDescription} 
+          setTodoDescription={setTodoDescription} buttonAdd={buttonAdd} Add_UpdateToDo={Add_UpdateToDo}/>
+        <Filter filterSelect={filterSelect}  setFilterSelect={setFilterSelect}/>
         <div className='row todo-cards-row py-5 d-flex justify-content-center'>
             {
               filteredCards.length === 0 ? <h3 className='h3 text-center mb-4'>The To-Do list is craving attention.<br/> Time to add some tasks and<br/> make it shine!</h3> :
@@ -130,7 +92,6 @@ function App() {
               })
             }
         </div>
-        
       </div>
       <Footer/>
     </>
